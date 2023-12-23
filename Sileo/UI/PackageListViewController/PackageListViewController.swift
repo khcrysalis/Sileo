@@ -476,14 +476,17 @@ extension PackageListViewController: UICollectionViewDataSource {
         if showSearchHistory {
             return .searchHistoryList
         }
-        
         if showUpdates {
-            if !availableUpdates.isEmpty && section == 0 {
-                return .updates
-            } else if availableUpdates.isEmpty && !ignoredUpdates.isEmpty && section == 0 {
-                return .ignoredUpdates
-            } else if section == 1 && !availableUpdates.isEmpty && !ignoredUpdates.isEmpty {
-                return .ignoredUpdates
+            if section == 0 {
+                if !availableUpdates.isEmpty {
+                    return .updates
+                } else if !ignoredUpdates.isEmpty {
+                    return .ignoredUpdates
+                }
+            } else if section == 1 {
+                if !ignoredUpdates.isEmpty && !availableUpdates.isEmpty {
+                    return .ignoredUpdates
+                }
             }
             return .packages
         }
@@ -491,10 +494,12 @@ extension PackageListViewController: UICollectionViewDataSource {
             if !showProvisional { return .reallyBoringList }
             if section == 1 {
                 return .canister
-            } else if section == 0 && !packages.isEmpty {
-                return .packages
-            } else if section == 0 && packages.isEmpty {
-                return .canister
+            } else if section == 0 {
+                if !packages.isEmpty {
+                    return .packages
+                } else {
+                    return .canister
+                }
             }
         }
         return .reallyBoringList
@@ -551,7 +556,7 @@ extension PackageListViewController: UICollectionViewDataSource {
         else {
             return UICollectionReusableView()
         }
-        switch findWhatFuckingSectionThisIs(indexPath.section) {
+        switch section {
         case .canister:
             headerView.actionText = nil
             headerView.separatorView?.isHidden = false
