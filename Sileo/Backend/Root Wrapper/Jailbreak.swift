@@ -72,6 +72,7 @@ enum Jailbreak: String, Codable {
         let fugu15_max =        URL(fileURLWithPath: "/var/jb/.installed_fugu15max")
         let dopamine =          URL(fileURLWithPath: "/var/jb/.installed_dopamine")
         let nekojb =            URL(fileURLWithPath: "/var/jb/.installed_nekojb")
+        let nekojb_rootful =    URL(fileURLWithPath: "/.installed_nekojb")
         let unc0ver =           URL(fileURLWithPath: "/.installed_unc0ver")
         let taurine =           URL(fileURLWithPath: "/taurine/jailbreakd")
         let odyssey =           URL(fileURLWithPath: "/odyssey/jailbreakd")
@@ -83,7 +84,7 @@ enum Jailbreak: String, Codable {
 
         case xina.exists && arm64e:                 self = .xina15; return
         case xina_Legacy.exists && arm64e:          self = .xina15_legacy; return
-        case nekojb.exists:                         self = .nekojb; return
+        case nekojb.exists || nekojb_rootful.exists:self = .nekojb; return
         case fugu15_max.exists && arm64e:           self = .fugu15; return
         case dopamine.exists:                       self = .dopamine; return
         case unc0ver.exists:                        self = .unc0ver; return
